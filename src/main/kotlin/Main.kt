@@ -1,3 +1,5 @@
+import org.jetbrains.exposed.dao.id.LongIdTable
+import org.jetbrains.exposed.sql.Column
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.transactions.transaction
 
@@ -10,6 +12,11 @@ fun main() {
   )
 
   transaction {
-    
+
   }
+}
+
+object CustomersTable : LongIdTable("customers") {
+  val name = varchar("name", 20)
+  val email = varchar("email", 50).nullable()
 }
