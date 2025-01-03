@@ -10,37 +10,37 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
 class CustomersTableTest {
-    @BeforeEach
-    fun setup() {
-        Database.connect(
-            "jdbc:postgresql://localhost:5432/sports_db_test",
-            user = "sports_db_admin",
-            password = "abcd1234"
-        )
-        transaction {
-            SchemaUtils.create(CustomersTable)
-        }
+  @BeforeEach
+  fun setup() {
+    Database.connect(
+      "jdbc:postgresql://localhost:5432/sports_db_test",
+      user = "sports_db_admin",
+      password = "abcd1234"
+    )
+    transaction {
+      SchemaUtils.create(CustomersTable)
     }
+  }
 
 
-    @AfterEach
-    fun teardown() {
-        transaction {
-            SchemaUtils.drop(CustomersTable)
-        }
+  @AfterEach
+  fun teardown() {
+    transaction {
+      SchemaUtils.drop(CustomersTable)
     }
+  }
 
-    @Test
-    fun `insert creates a new row in Customers`() = transaction {
-        val newId = CustomersTable.insertAndGetId { row ->
-            row[firstName] = "Nicholas"
-            row[lastName] = "Clark"
-            row[city] = "Danbury"
-            row[state] = "CT"
-        }
-        val row = CustomersTable.select { CustomersTable.id eq newId }.firstOrNull()
-
-        assertNotNull(row)
-        assertEquals("Nicholas", row!![CustomersTable.firstName])
+  @Test
+  fun `insert creates a new row in Customers`() = transaction {
+    val newId = CustomersTable.insertAndGetId { row ->
+      row[firstName] = "Nicholas"
+      row[lastName] = "Clark"
+      row[city] = "Danbury"
+      row[state] = "CT"
     }
+    val row = CustomersTable.select { CustomersTable.id eq newId }.firstOrNull()
+
+    assertNotNull(row)
+    assertEquals("Nicholas", row!![CustomersTable.firstName])
+  }
 }
