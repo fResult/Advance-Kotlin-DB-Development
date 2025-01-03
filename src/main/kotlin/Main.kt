@@ -1,8 +1,5 @@
 import org.jetbrains.exposed.dao.id.LongIdTable
-import org.jetbrains.exposed.sql.Database
-import org.jetbrains.exposed.sql.SchemaUtils
-import org.jetbrains.exposed.sql.insert
-import org.jetbrains.exposed.sql.insertAndGetId
+import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
 
 fun main() {
@@ -20,8 +17,11 @@ fun main() {
       row[name] = "Bob"
     }
 
+    val newRow = CustomersTable.insert { row -> row[name] = "Korn" }.resultedValues?.first()
+
     statement.resultedValues?.singleOrNull()?.also { println("New row: ${it.getOrNull(CustomersTable.name)}") }
     println("Inserted row with id: $newId")
+    println("New row: $newRow")
   }
 }
 
