@@ -5,17 +5,23 @@ import org.jetbrains.exposed.sql.transactions.transaction
 
 fun main() {
   println("Hello Exposed!")
-  val db = Database.connect(
-    url = "jdbc:postgresql://localhost:5432/sports_db",
-    user = "sports_db_admin",
-    password = "12345678"
-  )
+  connect()
 
   transaction {
-    SchemaUtils.drop(CustomersTable)
-    SchemaUtils.create(CustomersTable)
+    recreateTables()
   }
 }
+
+fun recreateTables() {
+  SchemaUtils.drop(CustomersTable)
+  SchemaUtils.create(CustomersTable)
+}
+
+fun connect() = Database.connect(
+  url = "jdbc:postgresql://localhost:5432/sports_db",
+  user = "sports_db_admin",
+  password = "12345678"
+)
 
 object CustomersTable : LongIdTable("customers") {
   val name = varchar("name", 20)
