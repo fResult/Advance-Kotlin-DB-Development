@@ -1,6 +1,6 @@
 import org.jetbrains.exposed.dao.id.LongIdTable
-import org.jetbrains.exposed.sql.Column
 import org.jetbrains.exposed.sql.Database
+import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.transactions.transaction
 
 fun main() {
@@ -12,7 +12,8 @@ fun main() {
   )
 
   transaction {
-
+    SchemaUtils.drop(CustomersTable)
+    SchemaUtils.create(CustomersTable)
   }
 }
 
