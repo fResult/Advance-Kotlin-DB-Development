@@ -1,4 +1,5 @@
 import org.jetbrains.exposed.sql.Database
+import org.jetbrains.exposed.sql.transactions.transaction
 
 fun main() {
   println("Hello Exposed!")
@@ -8,5 +9,7 @@ fun main() {
     password = "12345678"
   )
 
-  println("${db.vendor} ${db.dialect.name}")
+  transaction {
+    
+  }
 }
