@@ -12,8 +12,10 @@ repositories {
 }
 
 val exposedVersion = "0.39.2"
-val postgresqlVersion = "42.4.1"
+val postgresqlVersion = "42.7.2"
 dependencies {
+  implementation("org.jetbrains.exposed:exposed-jdbc:$exposedVersion")
+  implementation("org.postgresql:postgresql:$postgresqlVersion")
   testImplementation(kotlin("test"))
 }
 
