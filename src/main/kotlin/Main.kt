@@ -12,16 +12,10 @@ fun main() {
   transaction {
     recreateTables()
     createCustomers()
-    trySelectCustomers()
 
+    trySelectCustomers()
     println("=====================================")
-    CustomersTable.update({ CustomersTable.id eq 1L }) { row ->
-      row[email] = SqlUtils.buildEmail(name)
-    }
-    CustomersTable.update({ CustomersTable.name.lowerCase() eq "BoB".lowercase() }) { row ->
-      row[email] = SqlUtils.buildEmail(name)
-    }
-    CustomersTable.selectAll().forEach(::println)
+    tryUpdateCustomers()
   }
 }
 
@@ -45,6 +39,16 @@ fun trySelectCustomers() {
   println("=====================================")
 
   CustomersTable.select((CustomersTable.name.isNotNull()) and (CustomersTable.name like "%o%")).forEach(::println)
+}
+
+fun tryUpdateCustomers() {
+  CustomersTable.update({ CustomersTable.id eq 1L }) { row ->
+    row[email] = SqlUtils.buildEmail(name)
+  }
+  CustomersTable.update({ CustomersTable.name.lowerCase() eq "BoB".lowercase() }) { row ->
+    row[email] = SqlUtils.buildEmail(name)
+  }
+  CustomersTable.selectAll().forEach(::println)
 }
 
 fun createCustomers() = transaction {
