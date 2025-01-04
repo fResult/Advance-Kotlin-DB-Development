@@ -1,5 +1,7 @@
 import org.jetbrains.exposed.dao.id.LongIdTable
 import org.jetbrains.exposed.sql.*
+import org.jetbrains.exposed.sql.SqlExpressionBuilder.isNotNull
+import org.jetbrains.exposed.sql.SqlExpressionBuilder.like
 import org.jetbrains.exposed.sql.transactions.transaction
 
 fun main() {
@@ -10,12 +12,30 @@ fun main() {
     recreateTables()
     createCustomers()
 
-    CustomersTable.selectAll().forEach(::println)
-    println("=====================================")
-    CustomersTable.select { CustomersTable.email.isNotNull() }.forEach {
-      println("Customer Name: ${it[CustomersTable.name]}, Email: ${it[CustomersTable.email]}")
-    }
+    trySelectCustomers()
   }
+}
+
+fun trySelectCustomers() {
+  CustomersTable.selectAll().forEach(::println)
+
+  println("=====================================")
+
+  CustomersTable.select { CustomersTable.email.isNotNull() }.forEach {
+    println("Customer Name: ${it[CustomersTable.name]}, Email: ${it[CustomersTable.email]}")
+  }
+
+  println("=====================================")
+
+  CustomersTable.select { CustomersTable.name like "%o%" }.forEach(::println)
+
+  println("=====================================")
+
+  CustomersTable.select { CustomersTable.name inList listOf("Korn", "Alice") }.forEach(::println)
+
+  println("=====================================")
+
+  CustomersTable.select((CustomersTable.name.isNotNull()) and (CustomersTable.name like "%o%")).forEach(::println)
 }
 
 fun createCustomers() = transaction {
