@@ -16,10 +16,10 @@ fun main() {
 
     println("=====================================")
     CustomersTable.update({ CustomersTable.id eq 1L }) { row ->
-      row[email] = "alice@example.com"
+      row[email] = SqlUtils.buildEmail(name)
     }
     CustomersTable.update({ CustomersTable.name.lowerCase() eq "BoB".lowercase() }) { row ->
-      row[email] = "bob@example.com"
+      row[email] = SqlUtils.buildEmail(name)
     }
     CustomersTable.selectAll().forEach(::println)
   }
