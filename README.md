@@ -47,3 +47,24 @@ Check out my other courses on [LinkedIn Learning](https://www.linkedin.com/learn
 [lil-course-url]: https://www.linkedin.com/learning/advanced-kotlin-database-development?dApp=59033956
 
 [lil-thumbnail-url]: https://media.licdn.com/dms/image/C560DAQEgBRstLtOJbA/learning-public-crop_675_1200/0/1671157490377?e=2147483647&v=beta&t=6SkFJLW3QefCYjY-sI8P12BYrV4oQjNmMeYfjKJgwgY
+
+## How to use this repository
+
+1. Install Dependencies
+
+    ```bash
+    ./gradlew clean build
+    ```
+2. Run docker-compose up to start the PostgreSQL database.
+
+    ```bash
+    docker-compose up -d
+    ```
+
+### Part 1
+
+We can start the application with the following command.
+
+```bash
+./gradlew run
+```

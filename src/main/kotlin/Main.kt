@@ -133,7 +133,7 @@ fun recreateTables() {
 }
 
 fun connect() = Database.connect(
-  url = "jdbc:postgresql://localhost:5432/sports_db",
+  url = "jdbc:postgresql://localhost:5431/sports_db",
   user = "sports_db_admin",
   password = "12345678"
 )
