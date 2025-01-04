@@ -68,3 +68,17 @@ We can start the application with the following command.
 ```bash
 ./gradlew run
 ```
+
+### Part 2
+
+1. Run the create_populated_db.sh script to create the database and populate it with data.
+
+    ```bash
+    ./create_populated_db.sh
+    ```
+
+2. Run the application.
+
+    ```bash
+    ./gradlew run
+    ```
