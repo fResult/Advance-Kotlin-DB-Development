@@ -1,9 +1,8 @@
-import org.jetbrains.exposed.dao.id.LongIdTable
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.isNotNull
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.like
 import org.jetbrains.exposed.sql.transactions.transaction
-
+import tables.CustomersTable
 
 fun main() {
   println("Hello Exposed!")
@@ -94,8 +93,3 @@ fun connect() = Database.connect(
   user = "sports_db_admin",
   password = "12345678"
 )
-
-object CustomersTable : LongIdTable("customers") {
-  val name = varchar("name", 20)
-  val email = varchar("email", 50).nullable()
-}
