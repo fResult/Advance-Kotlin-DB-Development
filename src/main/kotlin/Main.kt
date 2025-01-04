@@ -4,6 +4,7 @@ import org.jetbrains.exposed.sql.SqlExpressionBuilder.isNotNull
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.like
 import org.jetbrains.exposed.sql.transactions.transaction
 
+
 fun main() {
   println("Hello Exposed!")
   connect()
@@ -11,8 +12,16 @@ fun main() {
   transaction {
     recreateTables()
     createCustomers()
-
     trySelectCustomers()
+
+    println("=====================================")
+    CustomersTable.update({ CustomersTable.id eq 1L }) { row ->
+      row[email] = "alice@example.com"
+    }
+    CustomersTable.update({ CustomersTable.name.lowerCase() eq "BoB".lowercase() }) { row ->
+      row[email] = "bob@example.com"
+    }
+    CustomersTable.selectAll().forEach(::println)
   }
 }
 
