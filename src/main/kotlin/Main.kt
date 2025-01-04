@@ -8,7 +8,11 @@ fun main() {
 
   transaction {
     recreateTables()
+    createCustomers()
+  }
+}
 
+fun createCustomers() = transaction {
     val statement = CustomersTable.insert { row ->
       row[name] = "Alice"
     }
@@ -18,11 +22,6 @@ fun main() {
     }
 
     val newRow = CustomersTable.insert { row -> row[name] = "Korn" }.resultedValues?.first()
-
-    statement.resultedValues?.singleOrNull()?.also { println("New row: ${it.getOrNull(CustomersTable.name)}") }
-    println("Inserted row with id: $newId")
-    println("New row: $newRow")
-  }
 }
 
 fun recreateTables() {
