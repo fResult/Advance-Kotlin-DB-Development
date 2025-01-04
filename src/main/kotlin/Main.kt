@@ -9,6 +9,12 @@ fun main() {
   transaction {
     recreateTables()
     createCustomers()
+
+    CustomersTable.selectAll().forEach(::println)
+    println("=====================================")
+    CustomersTable.select { CustomersTable.email.isNotNull() }.forEach {
+      println("Customer Name: ${it[CustomersTable.name]}, Email: ${it[CustomersTable.email]}")
+    }
   }
 }
 
