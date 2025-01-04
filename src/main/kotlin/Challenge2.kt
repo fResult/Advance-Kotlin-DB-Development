@@ -80,9 +80,9 @@ enum class OrderStatus {
 
 fun connect() {
   Database.connect(
-    "jdbc:postgresql://localhost:5432/sports_db_populated",
+    "jdbc:postgresql://localhost:5431/sports_db_populated",
     user = "sports_db_admin",
-    password = "abcd1234"
+    password = "12345678"
   )
 }
 
