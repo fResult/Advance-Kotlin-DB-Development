@@ -11,7 +11,7 @@ fun main() {
   connect()
 
   transaction {
-    val capitalizedFirstName = CustomersTable.firstName.upperCase().alias("capitalized_first_name")
+    val capitalizedFirstName = CustomersTable.firstName.function("UPPER").alias("capitalized_first_name")
     CustomersTable.slice(CustomersTable.id, capitalizedFirstName)
       .selectAll()
       .forEach { row ->
