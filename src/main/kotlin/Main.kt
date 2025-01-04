@@ -11,9 +11,12 @@ fun main() {
   connect()
 
   transaction {
-    CustomersTable.slice(CustomersTable.id, CustomersTable.firstName)
+    val capitalizedFirstName = CustomersTable.firstName.upperCase().alias("capitalized_first_name")
+    CustomersTable.slice(CustomersTable.id, capitalizedFirstName)
       .selectAll()
-      .forEach(::println)
+      .forEach { row ->
+        println("${row[CustomersTable.id]}: ${row[capitalizedFirstName]}")
+      }
   }
 }
 
