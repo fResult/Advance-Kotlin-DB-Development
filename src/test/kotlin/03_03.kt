@@ -13,9 +13,9 @@ class CustomersTableTest {
   @BeforeEach
   fun setup() {
     Database.connect(
-      "jdbc:postgresql://localhost:5432/sports_db_test",
+      "jdbc:postgresql://localhost:5431/sports_db_test",
       user = "sports_db_admin",
-      password = "abcd1234"
+      password = "12345678"
     )
     transaction {
       SchemaUtils.create(CustomersTable)
