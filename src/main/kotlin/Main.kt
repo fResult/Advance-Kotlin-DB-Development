@@ -3,6 +3,8 @@ import org.jetbrains.exposed.sql.SqlExpressionBuilder.isNotNull
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.like
 import org.jetbrains.exposed.sql.transactions.transaction
 import tables.CustomersTable
+import tables.OrdersTable
+import java.math.BigDecimal
 
 fun main() {
   println("Hello Exposed!")
@@ -17,7 +19,23 @@ fun main() {
     tryUpdateCustomers()
     println("=====================================")
     tryDeleteCustomers()
+
+    println("=====================================")
+
+    doChallenge1()
   }
+}
+
+fun doChallenge1() {
+  createOrders()
+  OrdersTable.update({ OrdersTable.status eq "Returned" }) { row ->
+    row[totalDue] = BigDecimal(246.12)
+  }
+  OrdersTable.deleteWhere { OrdersTable.totalDue less BigDecimal(200) }
+  OrdersTable.selectAll().forEach(::println)
+
+  println("======== Find by order with total due more than 220.0 ========")
+  OrdersTable.select { OrdersTable.totalDue greater BigDecimal(220.0) }.forEach(::println)
 }
 
 fun trySelectCustomers() {
@@ -83,9 +101,34 @@ fun createCustomers() = transaction {
   }.resultedValues?.first()
 }
 
+fun createOrders() = transaction {
+  OrdersTable.insert { row ->
+    row[totalDue] = BigDecimal(104.91)
+    row[status] = "Paid"
+  }
+
+  OrdersTable.insert { row ->
+    row[totalDue] = BigDecimal(105.32)
+    row[status] = "Returned"
+  }
+
+  OrdersTable.insert { row ->
+    row[totalDue] = BigDecimal(217.30)
+    row[status] = "Past Due"
+  }
+
+  OrdersTable.insert { row ->
+    row[totalDue] = BigDecimal(281.39)
+    row[status] = "Paid"
+  }
+}
+
 fun recreateTables() {
   SchemaUtils.drop(CustomersTable)
   SchemaUtils.create(CustomersTable)
+
+  SchemaUtils.drop(OrdersTable)
+  SchemaUtils.create(OrdersTable)
 }
 
 fun connect() = Database.connect(
