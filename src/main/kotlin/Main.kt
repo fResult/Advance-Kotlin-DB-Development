@@ -13,15 +13,18 @@ fun main() {
 }
 
 fun createCustomers() = transaction {
-    val statement = CustomersTable.insert { row ->
-      row[name] = "Alice"
-    }
+  val statement = CustomersTable.insert { row ->
+    row[name] = "Alice"
+  }
 
-    val newId = CustomersTable.insertAndGetId { row ->
-      row[name] = "Bob"
-    }
+  val newId = CustomersTable.insertAndGetId { row ->
+    row[name] = "Bob"
+  }
 
-    val newRow = CustomersTable.insert { row -> row[name] = "Korn" }.resultedValues?.first()
+  val newRow = CustomersTable.insert { row ->
+    row[name] = "Korn"
+    row[email] = "korn@example.com"
+  }.resultedValues?.first()
 }
 
 fun recreateTables() {
