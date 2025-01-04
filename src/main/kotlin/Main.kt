@@ -35,7 +35,8 @@ fun doChallenge1() {
   OrdersTable.selectAll().forEach(::println)
 
   println("======== Find by order with total due more than 220.0 ========")
-  OrdersTable.select { OrdersTable.totalDue greater BigDecimal(220.0) }.forEach(::println)
+  OrdersTable.select { (OrdersTable.status eq "Paid") and (OrdersTable.totalDue greater BigDecimal(220.0)) }
+    .forEach(::println)
 }
 
 fun trySelectCustomers() {
