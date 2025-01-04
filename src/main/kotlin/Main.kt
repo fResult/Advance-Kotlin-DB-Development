@@ -16,6 +16,8 @@ fun main() {
     trySelectCustomers()
     println("=====================================")
     tryUpdateCustomers()
+    println("=====================================")
+    tryDeleteCustomers()
   }
 }
 
@@ -49,6 +51,22 @@ fun tryUpdateCustomers() {
     row[email] = SqlUtils.buildEmail(name)
   }
   CustomersTable.selectAll().forEach(::println)
+}
+
+fun tryDeleteCustomers() {
+  CustomersTable.deleteWhere { CustomersTable.id eq 2L }
+  CustomersTable.selectAll().forEach(::println)
+
+  println("=====================================")
+
+  CustomersTable.deleteAll() // DON'T DO THIS IN PRODUCTION
+  val result = CustomersTable.selectAll()
+  if (result.empty()) {
+    println("No customers found")
+  } else {
+    result.forEach(::println)
+  }
+
 }
 
 fun createCustomers() = transaction {
