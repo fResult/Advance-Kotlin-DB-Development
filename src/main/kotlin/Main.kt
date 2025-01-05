@@ -19,20 +19,24 @@ fun main() {
     // do0203()
 
     // 02_04
-    val customerAmount = 500_000
-    // Uncomment to create tons of customers with Orders only one time for testing
-    // createCustomersWithOrders(customerAmount, orderAmountPerCustomer = 1)
-
-    // We can try to see the difference of time to execute between indexes and no indexes at `orders.customer_id`
-    val timeTook = measureTimeMillis {
-      val resultRow = OrdersTable.select {
-        OrdersTable.customerId eq (customerAmount / 2).toLong()
-      }.first()
-      println(resultRow[OrdersTable.customerId])
-    }
-
-    println("Time to execute: $timeTook ms")
+    // do0204()
   }
+}
+
+fun do0204() {
+  // val customerAmount = 500_000
+  // /* Uncomment to create tons of customers with Orders only one time for testing */
+  // // createCustomersWithOrders(customerAmount, orderAmountPerCustomer = 1)
+
+  // // We can try to see the difference of time to execute between indexes and no indexes at `orders.customer_id`
+  // val timeTook = measureTimeMillis {
+  //   val resultRow = OrdersTable.select {
+  //     OrdersTable.customerId eq (customerAmount / 2).toLong()
+  //   }.first()
+  //   println(resultRow[OrdersTable.customerId])
+  // }
+
+  // println("Time to execute: $timeTook ms")
 }
 
 fun createCustomersWithOrders(customerAmount: Int, orderAmountPerCustomer: Int) = transaction {
