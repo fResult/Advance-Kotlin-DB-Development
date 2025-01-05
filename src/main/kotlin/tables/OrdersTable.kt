@@ -1,8 +1,10 @@
 package tables
 
 import org.jetbrains.exposed.dao.id.LongIdTable
+import org.jetbrains.exposed.sql.ReferenceOption
 
 object OrdersTable : LongIdTable("orders") {
-  val totalDue = decimal("total_due", 5, 2)
-  val status = varchar("status", 30)
+  val totalDue = varchar("total_due", 10)
+  val customerId = long("customer_id")
+    .references(CustomersTable.id, onDelete = ReferenceOption.CASCADE)
 }

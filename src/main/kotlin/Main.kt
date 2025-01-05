@@ -1,22 +1,33 @@
-import org.jetbrains.exposed.sql.*
-import org.jetbrains.exposed.sql.SqlExpressionBuilder.isNotNull
-import org.jetbrains.exposed.sql.SqlExpressionBuilder.like
+import org.jetbrains.exposed.sql.Database
+import org.jetbrains.exposed.sql.SchemaUtils
+import org.jetbrains.exposed.sql.deleteWhere
+import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.transactions.transaction
 import tables.CustomersTable
 import tables.OrdersTable
-import java.math.BigDecimal
 
 fun main() {
   println("Hello Exposed!")
   connect()
 
   transaction {
+    // 02_02
+    /*
     val capitalizedFirstName = CustomersTable.firstName.function("UPPER").alias("capitalized_first_name")
     CustomersTable.slice(CustomersTable.id, capitalizedFirstName)
       .selectAll()
       .forEach { row ->
         println("${row[CustomersTable.id]}: ${row[capitalizedFirstName]}")
       }
+    */
+
+    // 02_03
+    SchemaUtils.createMissingTablesAndColumns(OrdersTable)
+    OrdersTable.insert { row ->
+      row[customerId] = 100
+      row[totalDue] = "10$"
+    }
+    CustomersTable.deleteWhere { CustomersTable.id eq 101L }
   }
 }
 
