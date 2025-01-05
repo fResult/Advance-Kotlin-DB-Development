@@ -28,7 +28,7 @@ enum class OrderStatus {
         "cancelled" -> Cancelled
         "paid" -> Paid
         "returned" -> Returned
-        else -> throw RuntimeException("Unknown status: $dbValue")
+        else -> throw IllegalArgumentException("Unknown status: $dbValue")
       }
     }
   }

@@ -11,7 +11,12 @@ object OrdersTable : LongIdTable("orders") {
   val customerId = long("customer_id")
     .references(CustomersTable.id, onDelete = ReferenceOption.CASCADE)
     .index()
-  val status = enumerationByName<OrderStatus>("status", 20)
+  val status = customEnumeration(
+    "status",
+    "varchar(20)",
+    OrderStatus::fromDb,
+    OrderStatus::toDb
+  )
   val createdAt = datetime("created_at")
     .defaultExpression(CurrentDateTime)
 }
