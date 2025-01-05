@@ -42,10 +42,14 @@ fun main() {
     // do0210()
 
     // 02_11
-    OrdersTable.selectAll()
-      .where(OrdersTable.status eq OrderStatus.PastDue)
-      .forEach(::println)
+    do0211()
   }
+}
+
+fun do0211() {
+  OrdersTable.selectAll()
+    .where(OrdersTable.status eq OrderStatus.PastDue)
+    .forEach(::println)
 }
 
 fun do0210() {
