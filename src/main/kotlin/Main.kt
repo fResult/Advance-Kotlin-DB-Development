@@ -1,5 +1,6 @@
 import enumerations.OrderStatus
 import org.jetbrains.exposed.sql.*
+import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.transactions.transaction
 import tables.CustomersTable
 import tables.OrdersTable
@@ -30,6 +31,7 @@ fun main() {
 
     // 02_07
     do0207()
+    OrdersTable.selectAll().forEach(::println)
   }
 }
 
@@ -71,9 +73,7 @@ fun do0204() {
 
   // We can try to see the difference of time to execute between indexes and no indexes at `orders.customer_id`
   val timeTook = measureTimeMillis {
-    val resultRow = OrdersTable.select {
-      OrdersTable.customerId eq (customerAmount / 2).toLong()
-    }.first()
+    val resultRow = OrdersTable.selectAll().where { OrdersTable.customerId eq (customerAmount / 2).toLong() }.first()
     println(resultRow[OrdersTable.customerId])
   }
 
@@ -116,8 +116,7 @@ fun do0203() {
 
 fun do0202() {
   val capitalizedFirstName = CustomersTable.firstName.function("UPPER").alias("capitalized_first_name")
-  CustomersTable.slice(CustomersTable.id, capitalizedFirstName)
-    .selectAll()
+  CustomersTable.select(CustomersTable.id, capitalizedFirstName)
     .forEach { row ->
       println("${row[CustomersTable.id]}: ${row[capitalizedFirstName]}")
     }

@@ -13,10 +13,15 @@ repositories {
   mavenCentral()
 }
 
-val exposedVersion = "0.39.2"
+val exposedVersion = "0.57.0"
 val postgresqlVersion = "42.7.2"
+
 dependencies {
-  implementation("org.jetbrains.exposed:exposed-jdbc:$exposedVersion")
+  implementation(libs.exposed.core)
+  implementation(libs.exposed.dao)
+  implementation(libs.exposed.jdbc)
+  implementation(libs.exposed.kotlin.datetime)
+
   implementation("org.postgresql:postgresql:$postgresqlVersion")
   testImplementation(kotlin("test"))
 }
