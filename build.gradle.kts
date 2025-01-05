@@ -1,18 +1,28 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-  kotlin("jvm") version "1.7.10"
+  kotlin("jvm") version "2.1.0"
   application
 }
+
+group = "me.soshin"
+version = "1.0-SNAPSHOT"
 
 repositories {
   mavenCentral()
 }
 
+val exposedVersion = "0.57.0"
+val postgresqlVersion = "42.7.2"
+
 dependencies {
-  implementation("org.jetbrains.exposed:exposed-jdbc:0.39.2")
-  implementation("org.postgresql:postgresql:42.5.0")
-  implementation("org.jetbrains.exposed:exposed-kotlin-datetime:0.39.2")
+  implementation(libs.exposed.core)
+  implementation(libs.exposed.dao)
+  implementation(libs.exposed.jdbc)
+  implementation(libs.exposed.kotlin.datetime)
+
+  implementation("org.postgresql:postgresql:$postgresqlVersion")
   testImplementation(kotlin("test"))
 }
 
@@ -21,7 +31,13 @@ tasks.test {
 }
 
 tasks.withType<KotlinCompile> {
-  kotlinOptions.jvmTarget = "11"
+  compilerOptions({
+    jvmTarget.set(JvmTarget.JVM_17)
+  })
+}
+
+tasks.withType<JavaCompile> {
+  options.release.set(17)
 }
 
 application {
