@@ -29,14 +29,23 @@ fun main() {
     // do0206()
 
     // 02_07
-    SchemaUtils.drop(OrdersTable)
-    SchemaUtils.create(OrdersTable)
+    do0207()
+  }
+}
 
-    OrdersTable.insert { row ->
-      row[totalDue] = "376.86"
-      row[customerId] = 789L
-      row[status] = OrderStatus.Created
-    }
+fun do0207() {
+  SchemaUtils.drop(OrdersTable)
+  SchemaUtils.create(OrdersTable)
+
+  OrdersTable.insert { row ->
+    row[totalDue] = "376.86"
+    row[customerId] = 789
+    row[status] = OrderStatus.Created
+  }
+  OrdersTable.insert { row ->
+    row[totalDue] = "499.99"
+    row[customerId] = 555
+    row[status] = OrderStatus.PastDue
   }
 }
 
