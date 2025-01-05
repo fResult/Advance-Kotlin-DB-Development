@@ -12,13 +12,17 @@ fun main() {
     // do0202()
 
     // 02_03
-    SchemaUtils.createMissingTablesAndColumns(OrdersTable)
-    OrdersTable.insert { row ->
-      row[customerId] = 100
-      row[totalDue] = "10$"
-    }
-    CustomersTable.deleteWhere { CustomersTable.id eq 101L }
+    do0203()
   }
+}
+
+fun do0203() {
+  SchemaUtils.createMissingTablesAndColumns(OrdersTable)
+  OrdersTable.insert { row ->
+    row[customerId] = 100
+    row[totalDue] = "10$"
+  }
+  CustomersTable.deleteWhere { CustomersTable.id eq 101L }
 }
 
 fun do0202() {
