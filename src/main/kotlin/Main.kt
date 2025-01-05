@@ -3,7 +3,6 @@ import org.jetbrains.exposed.sql.transactions.transaction
 import tables.CustomersTable
 import tables.OrdersTable
 import kotlin.random.Random
-import kotlin.system.measureTimeMillis
 
 fun main() {
   println("Hello Exposed!")
@@ -22,11 +21,15 @@ fun main() {
     // do0204()
 
     // 02_05
-    CustomersTable.insert { row ->
-      row[firstName] = "John"
-      row[lastName] = "Carter"
-      row[email] = "mcooper@go.com"
-    }
+    do0205()
+  }
+}
+
+fun do0205() {
+  CustomersTable.insert { row ->
+    row[firstName] = "John"
+    row[lastName] = "Carter"
+    row[email] = "mcooper@go.com"
   }
 }
 
