@@ -1,7 +1,4 @@
-import org.jetbrains.exposed.sql.Database
-import org.jetbrains.exposed.sql.SchemaUtils
-import org.jetbrains.exposed.sql.deleteWhere
-import org.jetbrains.exposed.sql.insert
+import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
 import tables.CustomersTable
 import tables.OrdersTable
@@ -12,14 +9,7 @@ fun main() {
 
   transaction {
     // 02_02
-    /*
-    val capitalizedFirstName = CustomersTable.firstName.function("UPPER").alias("capitalized_first_name")
-    CustomersTable.slice(CustomersTable.id, capitalizedFirstName)
-      .selectAll()
-      .forEach { row ->
-        println("${row[CustomersTable.id]}: ${row[capitalizedFirstName]}")
-      }
-    */
+    // do0202()
 
     // 02_03
     SchemaUtils.createMissingTablesAndColumns(OrdersTable)
@@ -29,6 +19,15 @@ fun main() {
     }
     CustomersTable.deleteWhere { CustomersTable.id eq 101L }
   }
+}
+
+fun do0202() {
+  val capitalizedFirstName = CustomersTable.firstName.function("UPPER").alias("capitalized_first_name")
+  CustomersTable.slice(CustomersTable.id, capitalizedFirstName)
+    .selectAll()
+    .forEach { row ->
+      println("${row[CustomersTable.id]}: ${row[capitalizedFirstName]}")
+    }
 }
 
 fun connect() = Database.connect(
