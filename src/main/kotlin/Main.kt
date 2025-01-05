@@ -36,11 +36,27 @@ fun main() {
     // do0208()
 
     // 02_09
+    val columnsToSelect = listOf(
+      OrdersTable.id,
+      OrdersTable.totalDue,
+      OrdersTable.status,
+      OrdersTable.customerId,
+      CustomersTable.firstName,
+      CustomersTable.lastName
+    )
     (OrdersTable innerJoin CustomersTable)
-      .select(OrdersTable.totalDue, OrdersTable.status, CustomersTable.firstName, CustomersTable.lastName)
+      .select(columnsToSelect)
       .limit(10)
       .offset(20)
       .orderBy(OrdersTable.totalDue.castTo(DoubleColumnType()) to SortOrder.DESC)
+      .forEach(::println)
+
+    println("=====================================")
+
+    (CustomersTable leftJoin OrdersTable)
+      .select(columnsToSelect)
+      .limit(10)
+      .offset(20)
       .forEach(::println)
   }
 }
