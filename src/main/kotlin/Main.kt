@@ -22,7 +22,13 @@ fun main() {
     // do0204()
 
     // 02_05
-    do0205()
+    // do0205()
+
+    // 02_06
+    CustomersTable.selectAll()
+      .orderBy(CustomersTable.lastName to SortOrder.DESC)
+      .limit(10, offset = 20)
+      .forEach(::println)
   }
 }
 
