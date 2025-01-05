@@ -10,7 +10,7 @@ fun main() {
   connect()
 
   transaction {
-    SchemaUtils.createMissingTablesAndColumns(OrdersTable)
+    SchemaUtils.createMissingTablesAndColumns(CustomersTable, OrdersTable)
 
     // 02_02
     // do0202()
@@ -20,6 +20,13 @@ fun main() {
 
     // 02_04
     // do0204()
+
+    // 02_05
+    CustomersTable.insert { row ->
+      row[firstName] = "John"
+      row[lastName] = "Carter"
+      row[email] = "mcooper@go.com"
+    }
   }
 }
 
