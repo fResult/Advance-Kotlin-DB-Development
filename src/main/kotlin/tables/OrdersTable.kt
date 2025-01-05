@@ -7,4 +7,5 @@ object OrdersTable : LongIdTable("orders") {
   val totalDue = varchar("total_due", 10)
   val customerId = long("customer_id")
     .references(CustomersTable.id, onDelete = ReferenceOption.CASCADE)
+    .index()
 }

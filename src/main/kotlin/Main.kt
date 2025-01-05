@@ -2,22 +2,66 @@ import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
 import tables.CustomersTable
 import tables.OrdersTable
+import kotlin.random.Random
+import kotlin.system.measureTimeMillis
 
 fun main() {
   println("Hello Exposed!")
   connect()
 
   transaction {
+    SchemaUtils.createMissingTablesAndColumns(OrdersTable)
+
     // 02_02
     // do0202()
 
     // 02_03
-    do0203()
+    // do0203()
+
+    // 02_04
+    val customerAmount = 500_000
+    // Uncomment to create tons of customers with Orders only one time for testing
+    // createCustomersWithOrders(customerAmount, orderAmountPerCustomer = 1)
+
+    // We can try to see the difference of time to execute between indexes and no indexes at `orders.customer_id`
+    val timeTook = measureTimeMillis {
+      val resultRow = OrdersTable.select {
+        OrdersTable.customerId eq (customerAmount / 2).toLong()
+      }.first()
+      println(resultRow[OrdersTable.customerId])
+    }
+
+    println("Time to execute: $timeTook ms")
+  }
+}
+
+fun createCustomersWithOrders(customerAmount: Int, orderAmountPerCustomer: Int) = transaction {
+  var totalRows = 0L
+  val percent = (customerAmount * orderAmountPerCustomer) / 100
+
+  repeat(customerAmount) { customerAmountIdx ->
+    val newCustomerId = CustomersTable.insertAndGetId { row ->
+      row[firstName] = customerAmountIdx.toString()
+      row[lastName] = customerAmountIdx.toString()
+    }
+
+    repeat(orderAmountPerCustomer) {
+      OrdersTable.insert { row ->
+        row[totalDue] = Random.nextInt(0, 100).toString()
+        row[customerId] = newCustomerId.value
+      }
+    }
+
+    totalRows++
+
+    if (totalRows % percent == 0L) {
+      println("${customerAmountIdx / percent}%")
+      commit()
+    }
   }
 }
 
 fun do0203() {
-  SchemaUtils.createMissingTablesAndColumns(OrdersTable)
   OrdersTable.insert { row ->
     row[customerId] = 100
     row[totalDue] = "10$"
