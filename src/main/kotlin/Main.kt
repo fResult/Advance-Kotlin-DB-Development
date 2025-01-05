@@ -33,7 +33,15 @@ fun main() {
     // do0207()
 
     // 02_08
-    do0208()
+    // do0208()
+
+    // 02_09
+    (OrdersTable innerJoin CustomersTable)
+      .select(OrdersTable.totalDue, OrdersTable.status, CustomersTable.firstName, CustomersTable.lastName)
+      .limit(10)
+      .offset(20)
+      .orderBy(OrdersTable.totalDue.castTo(DoubleColumnType()) to SortOrder.DESC)
+      .forEach(::println)
   }
 }
 
