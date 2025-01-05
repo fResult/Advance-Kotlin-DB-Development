@@ -30,8 +30,15 @@ fun main() {
     // do0206()
 
     // 02_07
-    do0207()
-    OrdersTable.selectAll().forEach(::println)
+    // do0207()
+
+    // 02_08
+    SchemaUtils.addMissingColumnsStatements(OrdersTable)
+    OrdersTable.insert { row ->
+      row[totalDue] = "50.50"
+      row[customerId] = 1001
+      row[status] = OrderStatus.Created
+    }
   }
 }
 
