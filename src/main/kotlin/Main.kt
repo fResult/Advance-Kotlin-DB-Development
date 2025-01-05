@@ -39,16 +39,20 @@ fun main() {
     // do0209()
 
     // 02_10
-    val city = CustomersTable.city
-    val cityCount = city.count()
-
-    CustomersTable
-      .select(city, cityCount.alias("city_count"))
-      .groupBy(city)
-      .having { cityCount greaterEq 10 }
-      .orderBy(cityCount to SortOrder.DESC, city to SortOrder.ASC)
-      .forEach(::println)
+    do0210()
   }
+}
+
+fun do0210() {
+  val city = CustomersTable.city
+  val cityCount = city.count()
+
+  CustomersTable
+    .select(city, cityCount.alias("city_count"))
+    .groupBy(city)
+    .having { cityCount greaterEq 10 }
+    .orderBy(cityCount to SortOrder.DESC, city to SortOrder.ASC)
+    .forEach(::println)
 }
 
 fun do0209() {
