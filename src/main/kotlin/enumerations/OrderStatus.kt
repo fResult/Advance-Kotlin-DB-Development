@@ -1,6 +1,7 @@
 package enumerations
 
 enum class OrderStatus {
+  Pending,
   Created,
   Due,
   PastDue,

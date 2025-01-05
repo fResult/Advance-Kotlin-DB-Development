@@ -1,3 +1,4 @@
+import enumerations.OrderStatus
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
 import tables.CustomersTable
@@ -25,7 +26,17 @@ fun main() {
     // do0205()
 
     // 02_06
-    do0206()
+    // do0206()
+
+    // 02_07
+    SchemaUtils.drop(OrdersTable)
+    SchemaUtils.create(OrdersTable)
+
+    OrdersTable.insert { row ->
+      row[totalDue] = "376.86"
+      row[customerId] = 789L
+      row[status] = OrderStatus.Created
+    }
   }
 }
 
