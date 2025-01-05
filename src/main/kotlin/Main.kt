@@ -25,11 +25,15 @@ fun main() {
     // do0205()
 
     // 02_06
-    CustomersTable.selectAll()
-      .orderBy(CustomersTable.lastName to SortOrder.DESC)
-      .limit(10, offset = 20)
-      .forEach(::println)
+    do0206()
   }
+}
+
+fun do0206() {
+  CustomersTable.selectAll()
+    .orderBy(CustomersTable.lastName to SortOrder.DESC)
+    .limit(10, offset = 20)
+    .forEach(::println)
 }
 
 fun do0205() {
