@@ -33,12 +33,17 @@ fun main() {
     // do0207()
 
     // 02_08
-    SchemaUtils.addMissingColumnsStatements(OrdersTable)
-    OrdersTable.insert { row ->
-      row[totalDue] = "50.50"
-      row[customerId] = 1001
-      row[status] = OrderStatus.Created
-    }
+    do0208()
+  }
+}
+
+fun do0208() {
+  SchemaUtils.addMissingColumnsStatements(OrdersTable)
+
+  OrdersTable.insert { row ->
+    row[totalDue] = "50.50"
+    row[customerId] = 1001
+    row[status] = OrderStatus.Created
   }
 }
 
