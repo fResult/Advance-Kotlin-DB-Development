@@ -1,7 +1,4 @@
-import org.jetbrains.exposed.sql.Database
-import org.jetbrains.exposed.sql.SchemaUtils
-import org.jetbrains.exposed.sql.insertAndGetId
-import org.jetbrains.exposed.sql.select
+import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -38,7 +35,9 @@ class CustomersTableTest {
       row[city] = "Danbury"
       row[state] = "CT"
     }
-    val row = CustomersTable.select { CustomersTable.id eq newId }.firstOrNull()
+    val row = CustomersTable.selectAll()
+      .where { CustomersTable.id eq newId }
+      .firstOrNull()
 
     assertNotNull(row)
     assertEquals("Nicholas", row!![CustomersTable.firstName])
