@@ -1,7 +1,8 @@
+import lessons.lesson02
 import lessons.lesson03
 import org.jetbrains.exposed.sql.Database
 
-fun main() {
+suspend fun main() {
   println("Hello Exposed!")
   connect()
 

@@ -1,16 +1,27 @@
 package lessons
 
 import enumerations.OrderStatus
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.runBlocking
 import org.jetbrains.exposed.sql.*
+import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
 import org.jetbrains.exposed.sql.transactions.transaction
 import tables.CustomersTable
 import tables.OrdersTable
 
-fun lesson03() {
-  transaction {
+suspend fun lesson03() {
+  newSuspendedTransaction {
     // 03_01
-    do0301(this)
+    // do0301(this)
+
+    // 03_02
+    doIO()
+    CustomersTable.selectAll().limit(1)
   }
+}
+
+suspend fun doIO() {
+  delay(10)
 }
 
 private fun do0301(transaction: Transaction) {
