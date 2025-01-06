@@ -41,5 +41,5 @@ tasks.withType<JavaCompile> {
 }
 
 application {
-  mainClass.set("MainKt")
+  mainClass.set("_03_04Kt")
 }
