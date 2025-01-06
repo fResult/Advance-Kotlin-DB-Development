@@ -42,7 +42,25 @@ fun main() {
     // do0210()
 
     // 02_11
-    do0211()
+    // do0211()
+
+    // 02_12 - Challenge
+    val city = CustomersTable.city
+    val cityCount = city.count()
+    (OrdersTable innerJoin CustomersTable)
+      .select(
+        cityCount.alias("paid_order_count"),
+        city,
+        CustomersTable.state,
+      )
+      .where { OrdersTable.status eq OrderStatus.Paid }
+      .limit(10)
+      .groupBy(city, CustomersTable.state)
+      .orderBy(
+        cityCount to SortOrder.DESC,
+        city to SortOrder.ASC
+      )
+      .forEach(::println)
   }
 }
 
