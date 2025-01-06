@@ -2,10 +2,8 @@ package lessons
 
 import enumerations.OrderStatus
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.runBlocking
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
-import org.jetbrains.exposed.sql.transactions.transaction
 import tables.CustomersTable
 import tables.OrdersTable
 
@@ -15,13 +13,13 @@ suspend fun lesson03() {
     // do0301(this)
 
     // 03_02
-    doIO()
-    CustomersTable.selectAll().limit(1)
+    do0302()
   }
 }
 
-suspend fun doIO() {
-  delay(10)
+private suspend fun do0302() {
+  doIO()
+  CustomersTable.selectAll().limit(1).forEach(::println)
 }
 
 private fun do0301(transaction: Transaction) {
@@ -50,3 +48,4 @@ private fun do0301(transaction: Transaction) {
   println(statement)
 }
 
+suspend fun doIO() = delay(10)
