@@ -10,8 +10,8 @@ fun main() {
     val count = OrdersTable.status.count()
 
     val query = (CustomersTable innerJoin OrdersTable)
-      .slice(count, CustomersTable.city, CustomersTable.state)
-      .select { OrdersTable.status eq OrderStatus.Paid }
+      .select(count, CustomersTable.city, CustomersTable.state)
+      .where { OrdersTable.status eq OrderStatus.Paid }
       .groupBy(CustomersTable.city, CustomersTable.state)
       .limit(10)
       .orderBy(count to SortOrder.DESC, CustomersTable.city to SortOrder.ASC)
