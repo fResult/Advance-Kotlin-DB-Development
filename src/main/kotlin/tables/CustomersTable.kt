@@ -12,4 +12,5 @@ object CustomersTable : LongIdTable("customers") {
     .nullable()
     .uniqueIndex()
   val city = varchar("city", 20)
+  val state = varchar("state", 2)
 }
