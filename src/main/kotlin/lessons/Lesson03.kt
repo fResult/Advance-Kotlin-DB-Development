@@ -7,11 +7,14 @@ import tables.CustomersTable
 import tables.OrdersTable
 
 fun lesson03() {
-  transaction(statement = buildStatement())
+  transaction {
+    // 03_01
+    do0301(this)
+  }
 }
 
-private fun buildStatement(): Transaction.() -> String = {
-  addLogger(StdOutSqlLogger)
+private fun do0301(transaction: Transaction) {
+  transaction.addLogger(StdOutSqlLogger)
 
   val city = CustomersTable.city
   val cityCount = city.count()
@@ -31,10 +34,8 @@ private fun buildStatement(): Transaction.() -> String = {
     )
 
   query.forEach(::println)
-  val statement = query.prepareSQL(this)
+  val statement = query.prepareSQL(transaction)
 
   println(statement)
-
-  statement
 }
 
