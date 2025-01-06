@@ -1,13 +1,23 @@
 import org.jetbrains.exposed.dao.id.IntIdTable
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.ReferenceOption
+import org.jetbrains.exposed.sql.SortOrder
+import org.jetbrains.exposed.sql.count
 import org.jetbrains.exposed.sql.transactions.transaction
 
 fun main() {
   connect()
 
   transaction {
+    val count = CustomersTable.city.count()
 
+    (CustomersTable innerJoin OrdersTable)
+      .select(count, CustomersTable.city, CustomersTable.state)
+      .where { OrdersTable.status eq OrderStatus.Paid }
+      .groupBy(CustomersTable.city, CustomersTable.state)
+      .limit(10)
+      .orderBy(count to SortOrder.DESC, CustomersTable.city to SortOrder.ASC)
+      .forEach(::println)
   }
 }
 
