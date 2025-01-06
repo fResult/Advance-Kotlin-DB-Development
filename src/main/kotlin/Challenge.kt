@@ -1,6 +1,7 @@
 import org.jetbrains.exposed.dao.id.IntIdTable
 import org.jetbrains.exposed.dao.id.LongIdTable
 import org.jetbrains.exposed.sql.*
+import org.jetbrains.exposed.sql.SqlExpressionBuilder.less
 import org.jetbrains.exposed.sql.transactions.transaction
 import java.math.BigDecimal
 
@@ -19,9 +20,10 @@ fun main() {
       it[totalDue] = BigDecimal(246.12)
     }
 
-    OrdersTable.deleteWhere { OrdersTable.totalDue less BigDecimal(200) }
+    OrdersTable.deleteWhere {OrdersTable.totalDue less BigDecimal(200) }
 
-    OrdersTable.select { (OrdersTable.status eq "Paid") and (OrdersTable.totalDue greaterEq BigDecimal(200)) }
+    OrdersTable.selectAll()
+      .where { (OrdersTable.status eq "Paid") and (OrdersTable.totalDue greaterEq BigDecimal(200)) }
       .forEach(::println)
   }
 }
