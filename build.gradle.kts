@@ -23,6 +23,7 @@ dependencies {
   implementation(libs.exposed.kotlin.datetime)
 
   implementation("org.postgresql:postgresql:$postgresqlVersion")
+  implementation("ch.qos.logback:logback-classic:1.5.16")
   testImplementation(kotlin("test"))
 }
 
