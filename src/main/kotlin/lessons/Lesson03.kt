@@ -22,12 +22,15 @@ suspend fun lesson03() {
     // do0304(this)
 
     // Bonus: Logging long queries
-    warnLongQueriesDuration = 1
-
-    CustomersTable.selectAll().forEach(::doNothing)
+    bonus(this)
   }
 }
 
+private fun bonus(txn: Transaction) {
+  txn.warnLongQueriesDuration = 1
+
+  CustomersTable.selectAll().forEach(::doNothing)
+}
 private fun doNothing(`_`: Any) {}
 
 private fun do0304(txn: Transaction) {
