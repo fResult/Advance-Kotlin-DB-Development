@@ -13,8 +13,28 @@ suspend fun lesson03() {
     // do0301(this)
 
     // 03_02
-    do0302()
+    // do0302()
+
+    // 03_03
+    // do0303()
+
+    // 03_04
+    exec("GRANT SELECT ON Customers TO public")
+    exec(
+      "SELECT * FROM customers WHERE id = ?",
+      listOf(IntegerColumnType() to 1000),
+    ) { rs ->
+      val results = mutableListOf<Int>()
+      while (rs.next()) {
+        results.add(rs.getInt("id"))
+      }
+      results
+    }?.forEach(::println)
   }
+}
+
+private fun do0303() {
+  println("Do Nothing, it is in the unit test")
 }
 
 private suspend fun do0302() {
