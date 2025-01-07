@@ -4,6 +4,7 @@ import enumerations.OrderStatus
 import kotlinx.coroutines.delay
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
+import org.jetbrains.exposed.sql.transactions.transaction
 import tables.CustomersTable
 import tables.OrdersTable
 
@@ -19,18 +20,22 @@ suspend fun lesson03() {
     // do0303()
 
     // 03_04
-    exec("GRANT SELECT ON Customers TO public")
-    exec(
-      "SELECT * FROM customers WHERE id = ?",
-      listOf(IntegerColumnType() to 1000),
-    ) { rs ->
-      val results = mutableListOf<Int>()
-      while (rs.next()) {
-        results.add(rs.getInt("id"))
-      }
-      results
-    }?.forEach(::println)
+    do0304(this)
   }
+}
+
+private fun do0304(txn: Transaction) {
+  txn.exec("GRANT SELECT ON Customers TO public")
+  txn.exec(
+    "SELECT * FROM customers WHERE id = ?",
+    listOf(IntegerColumnType() to 1000),
+  ) { rs ->
+    val results = mutableListOf<Int>()
+    while (rs.next()) {
+      results.add(rs.getInt("id"))
+    }
+    results
+  }?.forEach(::println)
 }
 
 private fun do0303() {
